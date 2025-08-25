@@ -63,3 +63,13 @@ certificate authority, and removing Snap.
 
 **NB:** If you intend to use this role, first ensure that the git submodules are
 initialized and up-to-date.
+
+
+## Usage
+
+### Running a Playbook
+To run some arbitrary playbook ({PLAYBOOK}) such as common.yml, run the following command from this (ansible/) directory on your localhost.
+
+```sh
+ansible-playbook ./playbooks/{PLAYBOOK} -K
+```

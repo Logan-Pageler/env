@@ -1,8 +1,12 @@
 ---
-- name: "Run roles: caseysparkz.*.all"
+- name: "Run roles: loganpageler.*.all"
   ignore_errors: false
   hosts: "localhost"
+  collections:
+    - "loganpageler.security"
+    - "loganpageler.performance"
+    - "loganpageler.environment"
   roles:
-    - "caseysparkz.security.all"
-    - "caseysparkz.performance.all"
-    - "caseysparkz.environment.all"
+    - "loganpageler.security.all"
+    - "loganpageler.performance.all"
+    - "loganpageler.environment.all"

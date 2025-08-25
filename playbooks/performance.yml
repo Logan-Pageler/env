@@ -1,5 +1,5 @@
 ---
-- name: "Run caseysparkz.performance.all"
+- name: "Run loganpageler.performance.all"
   ignore_errors: false
   hosts: "localhost"
-  roles: ["caseysparkz.performance.all"]
+  roles: ["loganpageler.performance.all"]

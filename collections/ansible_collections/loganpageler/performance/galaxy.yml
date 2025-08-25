@@ -1,0 +1,17 @@
+---
+namespace: "loganpageler"
+name: "performance"
+version: "1.0.1"
+readme: "README.md"
+authors: ["Logan Pageler <pagelerlogan@gmail.com>"]
+description: "A collection of performance tweaks for Linux."
+license: ["GPL-2.0-or-later"]
+tags:
+  - "linux"
+  - "performance"
+dependencies: {}
+repository: &repo "https://github.com/Logan-Pageler/env"
+documentation: "https://github.com/Logan-Pageler/env/blob/collections/loganpageler/performance/README.md"
+homepage: *repo
+issues: "https://github.com/Logan-Pageler/env/issues"
+build_ignore: []

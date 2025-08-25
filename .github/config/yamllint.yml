@@ -4,11 +4,6 @@
 # Description:  Yamllint configuration for yamllint.yml workflow.
 
 extends: "default"
-ignore:  # git submodules
-  - "collections/caseysparkz/environment/roles/vim/files/vim/pack/plugins/start/nerdtree/**"
-  - "collections/caseysparkz/environment/roles/vim/files/vim/pack/plugins/start/gnupg/**"
-  - "collections/caseysparkz/environment/roles/vim/files/vim/pack/plugins/start/terraform/**"
-  - "collections/caseysparkz/environment/roles/vim/files/vim/pack/plugins/start/ale/**"
 rules:
   braces:
     level: "warning"

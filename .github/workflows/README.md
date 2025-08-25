@@ -3,11 +3,6 @@
 This directory contains CI/CD configurations via
 [GitHub Actions](https://github.com/features/actions).
 
-For more information, refer to the [GitOps](https://taumotors.atlassian.net/wiki/spaces/DEVOPS/pages/82935809/GitOps)
-and [GitHub Actions](https://taumotors.atlassian.net/wiki/spaces/DEVOPS/pages/95551490/Github+Actions)
-pages in the [DevOps Confluence
-space](https://taumotors.atlassian.net/wiki/spaces/DEVOPS/overview).
-
 Tau uses GitHub Actions to automate the testing and deployment of new software.
 
 Some of these tests are standard across all repositories (such as those

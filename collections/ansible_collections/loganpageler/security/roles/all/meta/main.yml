@@ -1,0 +1,23 @@
+---
+galaxy_info:
+  author: "Logan Pageler"
+  description: "Runs all security collecion roles."
+  issue_tracker_url: "https://github.com/Logan-Pageler/env/issues"
+  license: "GPL-2.0-or-later"
+  min_ansible_version: "2.17"
+  galaxy_tags: ["security"]
+  platforms:
+    - name: "Debian"
+      versions: ["bookworm"]
+dependencies:
+  - role: "loganpageler.security.auditd"
+  # role: "loganpageler.security.defaultdeny"
+  - role: "loganpageler.security.disablecrashreporters"
+  - role: "loganpageler.security.fail2ban"
+  - role: "loganpageler.security.faillock"
+  - role: "loganpageler.security.kernel"
+  - role: "loganpageler.security.passwords"
+  - role: "loganpageler.security.privilegeescalation"
+  - role: "loganpageler.security.ssh"
+  - role: "loganpageler.security.ulimit"
+  - role: "loganpageler.security.unattendedupgrades"
