@@ -2,7 +2,3 @@
     email = "logan@taumotors.com"
     name = "Logan Pageler"
     signingKey = "logan@taumotors.com"
-[commit]
-	gpgSign = true
-[tag]
-	gpgSign = true

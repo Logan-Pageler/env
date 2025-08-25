@@ -1,6 +1,7 @@
 [user]
     email = "pagelerlogan@gmail.com"
     name = "Logan Pageler"
+    signingKey = "pagelerlogan@gmail.com"
 [includeIf "gitdir:~/tau_motors/"]
     path = ~/.gitconfig.taumotors
 [core]
@@ -20,6 +21,7 @@
     default = "current"
     autoSetupRemote = true
 [commit]
+	gpgSign = true
     verbose = true
 [merge]
     tool = "kdiff3"
@@ -29,6 +31,7 @@
     enabled = true
     autoUpdate = true
 [tag]
+	gpgSign = true
     sort = "-version:refname"
 [diff]
     colorMoved = "zebra"
