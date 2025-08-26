@@ -58,7 +58,7 @@ The largest role in this playbook, and the least relevant for people who are not
 me.
 
 This role sets up my preferred user environments and configuration files for
-Bash, Git, GnuPG, Gnu Screen, SSH, Vim, etc, as well as installing my own
+Bash, Git, GnuPG, Gnu Screen, SSH, etc, as well as installing my own
 certificate authority, and removing Snap.
 
 **NB:** If you intend to use this role, first ensure that the git submodules are
@@ -68,8 +68,15 @@ initialized and up-to-date.
 ## Usage
 
 ### Running a Playbook
-To run some arbitrary playbook ({PLAYBOOK}) such as common.yml, run the following command from this (ansible/) directory on your localhost.
+To run some arbitrary playbook ({PLAYBOOK}) such as all.yml, run the following command from this (ansible/) directory on your localhost.
 
 ```sh
 ansible-playbook ./playbooks/{PLAYBOOK} -K --ask-vault-pass
+```
+
+It will ask for your root password.
+
+Alternatively to skip my secrets if you don't have my password
+```sh
+ansible-playbook ./playbooks/{PLAYBOOK} -e skip_secrets=true
 ```

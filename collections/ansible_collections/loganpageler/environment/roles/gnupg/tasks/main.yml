@@ -61,27 +61,34 @@
     file_type: "file"
 
 # For our secret keys we need to decrypt them first
-- name: Create a temporary directory
-  ansible.builtin.tempfile:
-    state: directory
-  register: temp_dir
+- block:
+  - name: Create a temporary directory
+    ansible.builtin.tempfile:
+      state: directory
+    register: temp_dir
 
-- name: Copy the vaulted secrets and decrypt
-  loop: "{{ gpg_secretkeys.files }}"
-  ansible.builtin.copy:
-    src: "{{ item.path }}"
-    dest: "{{ temp_dir.path }}/{{ item.path | basename }}"
-    decrypt: true
-    mode: '0600'
+  - name: Print temp_dir
+    ansible.builtin.debug:
+      msg: "{{ temp_dir.path }}"
 
-- name: "Import role secretkeys"
-  tags: ["gnupg"]
-  loop: "{{ gpg_secretkeys.files }}"
-  changed_when: false
-  ansible.builtin.command:
-    cmd: "gpg --import {{ temp_dir.path }}/{{ item.path | basename }}"
+  - name: Copy the vaulted secrets and decrypt
+    loop: "{{ gpg_secretkeys.files }}"
+    ansible.builtin.copy:
+      src: "{{ item.path }}"
+      dest: "{{ temp_dir.path }}/{{ item.path | basename }}"
+      decrypt: true
+      mode: '0600'
 
-- name: Clean up the temporary secret keys
-  ansible.builtin.file:
-    path: "{{ temp_dir.path }}"
-    state: absent
+  - name: "Import secretkeys"
+    tags: ["gnupg"]
+    loop: "{{ gpg_secretkeys.files }}"
+    changed_when: false
+    ansible.builtin.command:
+      cmd: "gpg --import {{ temp_dir.path }}/{{ item.path | basename }}"
+
+  - name: Clean up the temporary secret keys
+    ansible.builtin.file:
+      path: "{{ temp_dir.path }}"
+      state: absent
+  # This is optional so people can install my configs without my secret keys if they don't have my password
+  when: 'not (skip_secrets | d(false) | bool)'
