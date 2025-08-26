@@ -33,7 +33,7 @@
 
 - name: "Find role pubkeys"
   tags: ["gnupg"]
-  register: "pgp_pubkeys"
+  register: "gpg_pubkeys"
   ansible.builtin.find:
     paths: "{{ role_path }}/files/pubkeys/"
     patterns:
@@ -44,7 +44,44 @@
 
 - name: "Import role pubkeys"
   tags: ["gnupg"]
-  loop: "{{ pgp_pubkeys.files }}"
+  loop: "{{ gpg_pubkeys.files }}"
   changed_when: false
   ansible.builtin.command:
     cmd: "gpg --import {{ item.path }}"
+
+- name: "Find role secretkeys"
+  tags: ["gnupg"]
+  register: "gpg_secretkeys"
+  ansible.builtin.find:
+    paths: "{{ role_path }}/files/secretkeys/"
+    patterns:
+      - "*.asc"
+      - "*.gpg"
+    recurse: false
+    file_type: "file"
+
+# For our secret keys we need to decrypt them first
+- name: Create a temporary directory
+  ansible.builtin.tempfile:
+    state: directory
+  register: temp_dir
+
+- name: Copy the vaulted secrets and decrypt
+  loop: "{{ gpg_secretkeys.files }}"
+  ansible.builtin.copy:
+    src: "{{ item.path }}"
+    dest: "{{ temp_dir.path }}/{{ item.path | basename }}"
+    decrypt: true
+    mode: '0600'
+
+- name: "Import role secretkeys"
+  tags: ["gnupg"]
+  loop: "{{ gpg_secretkeys.files }}"
+  changed_when: false
+  ansible.builtin.command:
+    cmd: "gpg --import {{ temp_dir.path }}/{{ item.path | basename }}"
+
+- name: Clean up the temporary secret keys
+  ansible.builtin.file:
+    path: "{{ temp_dir.path }}"
+    state: absent

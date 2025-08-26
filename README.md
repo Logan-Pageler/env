@@ -71,5 +71,5 @@ initialized and up-to-date.
 To run some arbitrary playbook ({PLAYBOOK}) such as common.yml, run the following command from this (ansible/) directory on your localhost.
 
 ```sh
-ansible-playbook ./playbooks/{PLAYBOOK} -K
+ansible-playbook ./playbooks/{PLAYBOOK} -K --ask-vault-pass
 ```
