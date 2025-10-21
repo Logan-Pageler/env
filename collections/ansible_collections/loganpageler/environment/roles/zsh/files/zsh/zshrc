@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+#-*- coding:utf-8 -*-
+
+# Load other zsh files
+if [ -f "${HOME}/.zshrc.local" ]; then source "${HOME}/.zshrc.local"; fi  # For host-specific zsh config.
+if [ -f "${HOME}/.zsh/vars.sh" ]; then source "${HOME}/.zsh/vars.sh"; fi  # Load shell vars
+if [ -f "${HOME}/.zsh_aliases" ]; then source "${HOME}/.zsh_aliases"; fi  # Source alias definitions.
+if [ -d "${HOME}/.zsh/functions" ]; then  # Source function definitions.
+    for FUNC in "${HOME}"/.zsh/functions/*; do source "${FUNC}"; done
+fi
+if [ -x /usr/bin/gpgconf ]; then gpgconf --launch gpg-agent; fi  # Launch gpg-agent.
+if [ -x "$(which thefuck)" ]; then eval "$(thefuck --alias)"; fi  # Enable thefuck.
+if [ -f "${HOME}/.cache/wal/sequences" ]; then cat "${HOME}/.cache/wal/sequences"; fi  # Enable wal

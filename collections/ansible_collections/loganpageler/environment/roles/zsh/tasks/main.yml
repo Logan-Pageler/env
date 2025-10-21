@@ -1,0 +1,60 @@
+---
+- name: "Symlink ~/.zsh directory"
+  tags: ["zsh"]
+  ansible.builtin.file:
+    src: "{{ role_path }}/files/zsh/"  # TODO
+    dest: "{{ ansible_env.HOME }}/.zsh"
+    owner: "{{ ansible_effective_user_id }}"
+    group: "{{ ansible_effective_group_id }}"
+    state: "link"
+    follow: false
+    force: true
+
+- name: "Symlink ~/.zprofile"
+  tags: ["zsh"]
+  ansible.builtin.file:
+    src: "{{ ansible_env.HOME }}/.zsh/zprofile"
+    dest: "{{ ansible_env.HOME }}/.zprofile"
+    owner: "{{ ansible_effective_user_id }}"
+    group: "{{ ansible_effective_group_id }}"
+    state: "link"
+    force: true
+
+- name: "Symlink ~/.zshrc"
+  tags: ["zsh"]
+  ansible.builtin.file:
+    src: "{{ ansible_env.HOME }}/.zsh/zshrc"
+    dest: "{{ ansible_env.HOME }}/.zshrc"
+    owner: "{{ ansible_effective_user_id }}"
+    group: "{{ ansible_effective_group_id }}"
+    state: "link"
+    force: true
+
+- name: "Symlink ~/.zsh_aliases"
+  tags: ["zsh"]
+  ansible.builtin.file:
+    src: "{{ ansible_env.HOME }}/.zsh/zsh_aliases"
+    dest: "{{ ansible_env.HOME }}/.zsh_aliases"
+    owner: "{{ ansible_effective_user_id }}"
+    group: "{{ ansible_effective_group_id }}"
+    state: "link"
+    force: true
+
+- name: "Symlink ~/.zsh_logout"
+  tags: ["zsh"]
+  ansible.builtin.file:
+    src: "{{ ansible_env.HOME }}/.zsh/zsh_logout"
+    dest: "{{ ansible_env.HOME }}/.zsh_logout"
+    owner: "{{ ansible_effective_user_id }}"
+    group: "{{ ansible_effective_group_id }}"
+    state: "link"
+    force: true
+
+- name: "Touch ~/.zshrc.local"
+  tags: ["zsh"]
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.zshrc.local"
+    state: "touch"
+    owner: "{{ ansible_effective_user_id }}"
+    group: "{{ ansible_effective_group_id }}"
+    mode: "0755"
