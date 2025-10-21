@@ -1,11 +1,58 @@
 ---
 - name: "Create ~/.ssh/"
+  tags: ["ssh"]
   loop:
     - "{{ ansible_env.HOME }}/.ssh/"
-    - "{{ ansible_env.HOME }}/.ssh/keys"
   ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
     owner: "{{ ansible_effective_user_id }}"
     group: "{{ ansible_effective_group_id }}"
     mode: "0700"
+
+- name: "Find role pubkeys"
+  tags: ["ssh"]
+  register: "ssh_pubkeys"
+  ansible.builtin.find:
+    paths: "{{ role_path }}/files/pubkeys/"
+    patterns:
+      - "*.pub"
+    recurse: false
+    file_type: "file"
+
+- name: "Symlink pubkeys"
+  tags: ["ssh"]
+
+  loop: "{{ ssh_pubkeys.files }}"
+  ansible.builtin.file:
+    src: "{{ item.path }}"  # TODO
+    dest: "{{ ansible_env.HOME }}/.ssh/{{ item.path | basename }}"
+    owner: "{{ ansible_effective_user_id }}"
+    group: "{{ ansible_effective_group_id }}"
+    state: "link"
+    follow: false
+    force: true
+
+- name: "Find role secretkeys"
+  tags: ["ssh"]
+  register: "ssh_secretkeys"
+  ansible.builtin.find:
+    paths: "{{ playbook_dir }}/../secrets/ssh/secretkeys/"
+    patterns:
+      - "*"
+    recurse: false
+    file_type: "file"
+
+# For our secret keys we need to decrypt them first
+- block:
+  - name: Copy the vaulted secrets and decrypt
+    tags: ["ssh"]
+    loop: "{{ ssh_secretkeys.files }}"
+    ansible.builtin.copy:
+      src: "{{ item.path }}"
+      dest: "{{ ansible_env.HOME }}/.ssh"
+      decrypt: true
+      mode: '0600'
+
+  # This is optional so people can install my configs without my secret keys if they don't have my password
+  when: 'not (skip_secrets | d(false) | bool)'
